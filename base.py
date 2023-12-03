@@ -1,13 +1,30 @@
-def partOne():
-    with open("02.txt", "r") as f:
-        for s in f:
-            print()
+DEBUG_PRINTING = True
+TESTING = True
+
+def partOne(fi):
+	with open(fi, "r") as f:
+		for s in f:
+			print()
 
 
-def partTwo():
-    with open("02.txt", "r") as f:
-        print()
-    
+def partTwo(fi):
+	with open(fi, "r") as f:
+		for s in f:
+			print()
+	
 
-partOne()
-partTwo()
+def main():
+	if TESTING:
+		fi = "test.txt"
+	else:
+		fi = "03.txt"
+	
+	partOne(fi)
+	partTwo(fi)
+	
+
+def debugPrint(*s):
+	if DEBUG_PRINTING:
+		print(s)
+
+main()
