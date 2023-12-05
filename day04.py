@@ -26,9 +26,26 @@ def partOneHelper(arr):
 
 
 def partTwo(fi):
+	cards = []
 	with open(fi, "r") as f:
 		for s in f:
-			print(end='')
+			cards.append(' '.join(s.rstrip().split()).split(': ')[1].split())
+	print(partTwoHelper(cards))
+
+
+def partTwoHelper(cards):
+	vals = [1] * len(cards)
+	
+	for i in range(len(cards)):
+		split = cards[i].index('|')
+		winningNums = [int(n) for n in cards[i][:split]]
+		ourNums = [int(n) for n in cards[i][split+1:]]
+		won = len(set(winningNums).intersection(set(ourNums)))
+
+		for j in range(i + 1, i + 1 + won):
+			vals[j] += vals[i]
+
+	return sum(vals)
 	
 
 def main():
