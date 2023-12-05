@@ -1,13 +1,11 @@
-DEBUG_PRINTING = True
+DEBUG_PRINTING = False
 TESTING = False
 
 def partOne(fi):
 	with open(fi, "r") as f: 
-		# switch to storing how to generate each number instead of generating every dictionary
-		dictsList = [{}, {}, {}, {}, {}, {}, {}]
+		rangesList = [[], [], [], [], [], [], []]
 		seeds = [int(n) for n in f.readline().rstrip().split(': ')[1].split()]
 		f.readline()
-
 		for i in range(7):
 			f.readline()
 
@@ -16,24 +14,29 @@ def partOne(fi):
 				if not line:
 					break
 				line = [int(n) for n in line.split()]
-				for j in range(line[2]):
-					dictsList[i][line[1] + j] = line[0] + j
-			print("done")
+				rangesList[i].append(line)
 			
-	print(partOneHelper(seeds, dictsList))
+	print(partOneHelper(seeds, rangesList))
 
 
 def partOneHelper(seeds, maps):
 	results = []
 	for seed in seeds:
 		current = seed
-		for i in range(len(maps)):
-			if current in maps[i]:
-				current = maps[i][current]
+		nex = current
+
+		for i in range(len(maps)): # each mapping (seed to soil)
+			for j in range(len(maps[i])): # specifics (50 98 2)
+				if current >= maps[i][j][1] and current < maps[i][j][1] + maps[i][j][2]:
+					nex = (current - maps[i][j][1]) + maps[i][j][0]
+					debugPrint('in', current, nex)
+					break
+				debugPrint('in', current, nex)
+			debugPrint('out', current, nex, '\n')
+			current = nex
 		results.append(current)
 	
 	return min(results)
-
 
 
 def partTwo(fi):
