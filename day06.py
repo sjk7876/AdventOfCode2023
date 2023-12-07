@@ -23,11 +23,24 @@ def partOneHelper(t, d):
 	return prod(waysToBeat)
 
 
-
 def partTwo(fi):
 	with open(fi, "r") as f:
-		for s in f:
-			print(end='')
+		times = [int(''.join(f.readline().rstrip().split()).split(':')[1])]
+		distances = [int(''.join(f.readline().rstrip().split()).split(':')[1])]
+	
+	print(partTwoHelper(times, distances))
+
+
+def partTwoHelper(t, d):
+	waysToBeat = [0] * len(t)
+	for i in range(len(t)):
+		currentSpeed = 0
+		for j in range(t[i]):
+			if d[i] < (currentSpeed * (t[i] - j)):
+				waysToBeat[i] += 1
+			currentSpeed += 1
+	
+	return prod(waysToBeat)
 	
 
 def main():
